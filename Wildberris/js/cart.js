@@ -4,10 +4,23 @@ const cart = function() {
     const closeBtn = document.querySelector(".modal-close")
     const goodsContainer = document.querySelector(".long-goods-list")
 
-    // const addToCart = () => {
+    const addToCart = (id) => {
         
-    // }
+        const goods = JSON.parse(localStorage.getItem('goods'))
+                const clickedGood = goods.find(good => good.id === id)
+                const card = localStorage.getItem('cart') ?
+                    JSON.parse(localStorage.getItem('cart')) : []
 
+                   if(card.some(good => good.id === clickedGood.id)) {
+                    console.log("+=1 good")
+                   } else {
+                    console.log('add to basket')
+                    clickedGood.count = 1
+                    card.push(clickedGood)
+                   }
+
+                   localStorage.setItem('cart', JSON.stringify(card))
+    }
     cartBtn.addEventListener("click", function() {
     cart.style.display = "flex"
     })
@@ -21,11 +34,8 @@ const cart = function() {
             if (event.target.closest('.add-to-cart')) {
                 const buttonToCart = event.target.closest('.add-to-cart')
                 const goodId = buttonToCart.dataset.id
-                const goods = JSON.parse(localStorage.getItem('goods'))
-                // const clickedGood = goods.find(good => good.id === goodId)
-                // const card = localStorage.getItem('cart') ?
-                //     JSON.parse(localStorage.getItem('cart')): []
-                console.log(goods);
+                
+                addToCart(goodId)
             }
         })
     }
