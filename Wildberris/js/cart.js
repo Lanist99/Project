@@ -3,7 +3,10 @@ const cart = function() {
     const cart = document.getElementById("modal-cart")
     const closeBtn = document.querySelector(".modal-close")
     const goodsContainer = document.querySelector(".long-goods-list")
+    const cartTable = document.querySelector('.cart-table__goods')
 
+   
+   
     const addToCart = (id) => {
         
         const goods = JSON.parse(localStorage.getItem('goods'))
@@ -26,7 +29,40 @@ const cart = function() {
 
         localStorage.setItem('cart', JSON.stringify(cart))
     }
+
+    const renderCartGoods = (goods) => {
+        goods.forEach(good => {
+            const tr = document.createElement('tr')
+            tr.innerHTML = `	
+                <td>${good.name}</td>
+                <td>${good.price}</td>
+                <td><button class="cart-btn-minus"">-</button></td>
+                <td>${good.count}</td>
+                <td><button class=" cart-btn-plus"">+</button></td>
+                <td>${good.price * +good.count}</td>
+                <td><button class="cart-btn-delete"">x</button></td>
+            `
+            cartTable.append(tr)
+            tr.addEventListener('click' , (e) => {
+                if (e.target.classList.contains('cart-btn-minus')) {
+                    console.log("plus");
+                } else if  (e.target.classList.contains('cart-btn-plus')){
+                    console.log("dd");
+                } else if  (e.target.classList.contains('cart-btn-delete')){
+                    console.log('delete')
+                }
+            })
+
+        });
+    }
+
+
     cartBtn.addEventListener("click", function() {
+        const cartArray = localStorage.getItem('cart') ?
+            JSON.parse(localStorage.getItem('cart')) : []
+        
+        renderCartGoods(cartArray)
+
     cart.style.display = "flex"
     })
 
