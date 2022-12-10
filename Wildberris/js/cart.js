@@ -7,19 +7,24 @@ const cart = function() {
     const addToCart = (id) => {
         
         const goods = JSON.parse(localStorage.getItem('goods'))
-                const clickedGood = goods.find(good => good.id === id)
-                const card = localStorage.getItem('cart') ?
-                    JSON.parse(localStorage.getItem('cart')) : []
+        const clickedGood = goods.find(good => good.id === id)
+        const cart = localStorage.getItem('cart') ?
+            JSON.parse(localStorage.getItem('cart')) : []
 
-                   if(card.some(good => good.id === clickedGood.id)) {
-                    console.log("+=1 good")
-                   } else {
-                    console.log('add to basket')
-                    clickedGood.count = 1
-                    card.push(clickedGood)
-                   }
+        if (cart.some(good => good.id === clickedGood.id)) {
+            console.log("+=1 good");
+            cart.map(good => {
+                if (good.id === clickedGood.id) {
+                    good.count++
+                }
+                return good
+            })
+        } else {
+            clickedGood.count = 1
+            cart.push(clickedGood)
+        }
 
-                   localStorage.setItem('cart', JSON.stringify(card))
+        localStorage.setItem('cart', JSON.stringify(cart))
     }
     cartBtn.addEventListener("click", function() {
     cart.style.display = "flex"
