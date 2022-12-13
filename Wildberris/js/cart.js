@@ -4,7 +4,8 @@ const cart = function() {
     const closeBtn = document.querySelector(".modal-close")
     const goodsContainer = document.querySelector(".long-goods-list")
     const cartTable = document.querySelector('.cart-table__goods')
-   
+    const modalForm = document.querySelector ('.modal-form')
+
     const deleteCartItem = (id) => {
         const cart = JSON.parse(localStorage.getItem('cart'))
             
@@ -18,12 +19,30 @@ const cart = function() {
     const plusCartItem = (id) => {
         const cart = JSON.parse(localStorage.getItem('cart'))
             
-        localStorage.setItem('cart', JSON.stringify(cart))
+        const newCart =  cart.map(good => {
+            if (good.id === id) {
+                good.count++
+            }
+            return good
+        })
+
+        localStorage.setItem('cart', JSON.stringify(newCart))
+        renderCartGoods(JSON.parse(localStorage.getItem('cart')))
     }
     const minusCartItem = (id) => {
         const cart = JSON.parse(localStorage.getItem('cart'))
-            
-        localStorage.setItem('cart', JSON.stringify(cart))
+           
+        const newCart =  cart.map(good => {
+            if (good.id === id) {
+                if(good.count > 0) {
+                    good.count--
+                }
+            }
+            return good
+        })
+
+        localStorage.setItem('cart', JSON.stringify(newCart))
+        renderCartGoods(JSON.parse(localStorage.getItem('cart')))
     }
 
     const addToCart = (id) => {
@@ -34,7 +53,7 @@ const cart = function() {
             JSON.parse(localStorage.getItem('cart')) : []
 
         if (cart.some(good => good.id === clickedGood.id)) {
-            console.log("+=1 good");
+            // console.log("+=1 good");
             cart.map(good => {
                 if (good.id === clickedGood.id) {
                     good.count++
@@ -65,9 +84,9 @@ const cart = function() {
             cartTable.append(tr)
             tr.addEventListener('click' , (e) => {
                 if (e.target.classList.contains('cart-btn-minus')) {
-                    console.log("plus");
+                    minusCartItem(good.id)
                 } else if  (e.target.classList.contains('cart-btn-plus')) {
-                    console.log("dd");
+                    plusCartItem(good.id)
                 } else if  (e.target.classList.contains('cart-btn-delete')) { 
                     deleteCartItem(good.id)
                 }
@@ -76,6 +95,26 @@ const cart = function() {
         });
     }
 
+    const sendForm = () => {
+        const cart = localStorage.getItem('cart') ?
+            JSON.parse(localStorage.getItem('cart')) : []
+
+        fetch('https://jsonplaceholder.typicode.com/posts',{
+            method: 'POST',
+            body: JSON.stringify({
+                cart : cart,
+                name: '',
+                phone: ''
+            })
+        }).then(() => {
+            cart.style.display = ''
+        })
+    }
+
+    modalForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+        sendForm()
+    })
 
     cartBtn.addEventListener("click", function() {
         const cartArray = localStorage.getItem('cart') ?
