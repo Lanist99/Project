@@ -82,15 +82,15 @@ const cart = function() {
                 <td><button class="cart-btn-delete"">x</button></td>
             `
             cartTable.append(tr)
-            tr.addEventListener('click' , (e) => {
-                if (e.target.classList.contains('cart-btn-minus')) {
-                    minusCartItem(good.id)
-                } else if  (e.target.classList.contains('cart-btn-plus')) {
-                    plusCartItem(good.id)
-                } else if  (e.target.classList.contains('cart-btn-delete')) { 
-                    deleteCartItem(good.id)
-                }
-            })
+            // tr.addEventListener('click' , (e) => {
+            //     if (e.target.classList.contains('cart-btn-minus')) {
+            //         minusCartItem(good.id)
+            //     } else if  (e.target.classList.contains('cart-btn-plus')) {
+            //         plusCartItem(good.id)
+            //     } else if  (e.target.classList.contains('cart-btn-delete')) { 
+            //         deleteCartItem(good.id)
+            //     }
+            // })
 
         });
     }
@@ -122,7 +122,7 @@ const cart = function() {
         
         renderCartGoods(cartArray)
 
-    cart.style.display = "flex"
+        cart.style.display = "flex"
     })
 
     closeBtn.addEventListener("click", function() {
