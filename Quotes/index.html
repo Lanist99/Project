@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+</head>
+<body>
+    <style>
+    body {
+        background-color: #f2f2f2;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        padding-top: 50px;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 30px;
+      }
+
+      #quote {
+        font-size: 2rem;
+        margin-bottom: 30px;
+      }
+
+      #new-quote {
+        background-color: #4CAF50;
+        color: white;
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      </style>
+    <div class="container">
+        <h1>Random Quote Generator</h1>
+        <div id="quote"></div>
+        <button id="new-quote">New Quote</button>
+      </div>
+
+      <script>
+        const quotes = [
+  "Believe you can and you're halfway there. -Theodore Roosevelt",
+  "It does not matter how slowly you go as long as you do not stop. -Confucius",
+  "Everything you've ever wanted is on the other side of fear. -George Addair",
+  "Success is not final, failure is not fatal: It is the courage to continue that counts. -Winston Churchill",
+  "Hardships often prepare ordinary people for an extraordinary destiny. -C.S. Lewis",
+  "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle. -Christian D. Larson",
+  "You are never too old to set another goal or to dream a new dream. -C.S. Lewis",
+  "Believe in the power of your dreams. -Unknown",
+  "The future belongs to those who believe in the beauty of their dreams. -Eleanor Roosevelt",
+  "I can't change the direction of the wind, but I can adjust my sails to always reach my destination. -Jimmy Dean"
+];
+
+const quoteText = document.getElementById("quote");
+const newQuoteBtn = document.getElementById("new-quote");
+
+function getQuote() {
+  const randomIndex = Math.floor(Math.random() * quotes.length);
+  quoteText.textContent = quotes[randomIndex];
+}
+
+newQuoteBtn.addEventListener("click", getQuote);
+
+getQuote();
+      </script>
+</body>
+</html>
